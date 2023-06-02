@@ -1,7 +1,8 @@
-import React from "react";
-import { SectionComponent, messagesContainer } from "./styling_components";
-import { FlatList, View } from "react-native";
+import React, { useState } from "react";
+import { SectionComponent, ListItemSeparator } from "./styling_components";
+import { FlatList } from "react-native";
 import ListItem from "./ListItem";
+import SwipeableDelete from "./SwipeableDelete";
 
 /* 
 An array called messages is defined, which contains several objects 
@@ -10,13 +11,13 @@ like id, title, description, image, and text. The image property
 uses the require function to load the image from the provided file path.
 */
 
-const messages = [
+const initialMessages = [
   {
     id: 1,
     title: "This is title 1",
     description: "This is description 1",
     image: require("./assets/icon_images/alarm-clock.png"),
-    text: "What a mighty fine day!",
+    text: "What a mighty fine day! I wish I could go outside. I would like to go to the park and play with my friends.",
   },
   {
     id: 2,
@@ -30,7 +31,7 @@ const messages = [
     title: "This is title 3",
     description: "This is description 3",
     image: require("./assets/icon_images/case.png"),
-    text: "Good morning, Vietnam!",
+    text: "Good morning, everyone! Are we all ready for the big day? I know I am!",
   },
   {
     id: 4,
@@ -44,7 +45,7 @@ const messages = [
     title: "This is title 5",
     description: "This is description 5",
     image: require("./assets/icon_images/cloud.png"),
-    text: "Nothing to see here, move along!",
+    text: "Nothing to see here, move along! Why aren't you moving along? I said move along!",
   },
   {
     id: 6,
@@ -58,7 +59,7 @@ const messages = [
     title: "This is title 7",
     description: "This is description 7",
     image: require("./assets/icon_images/graph2.png"),
-    text: "No one expects the Spanish Inquisition!",
+    text: "No one expects the Spanish Inquisition! I am not sure why not. We have been around for a while.",
   },
 ];
 
@@ -80,21 +81,34 @@ props as its argument. Inside the component, a SectionComponent is used to
 */
 
 function MessagesList(props) {
+  // create a state variable to keep track of the messages
+  const [messages, setMessages] = useState(initialMessages);
+
+  const handleDelete = (message) => {
+    // Delete the message from the messages array
+    // Call the server to delete it from the backend
+    setMessages(messages.filter((m) => m.id !== message.id));
+  };
+
   return (
     <SectionComponent text="Flat List">
       <FlatList
         data={messages}
         keyExtractor={(message) => message.id.toString()}
         renderItem={({ item }) => (
-          <View style={messagesContainer}>
-            <ListItem
-              title={item.title}
-              description={item.description}
-              image={item.image}
-              text={item.text}
-            />
-          </View>
+          <ListItem
+            title={item.title}
+            description={item.description}
+            image={item.image}
+            text={item.text}
+            onPress={() => console.log("Message clicked:", item.text)}
+            // custom function to render the delete button
+            renderRightActions={() => (
+              <SwipeableDelete onPress={() => handleDelete(item)} />
+            )}
+          />
         )}
+        ItemSeparatorComponent={ListItemSeparator}
       />
     </SectionComponent>
   );

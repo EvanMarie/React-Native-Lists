@@ -1,7 +1,8 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, SafeAreaView } from "react-native";
 import { StyleSheet } from "react-native";
 import colors from "./colors";
+import Constants from "expo-constants";
 
 export const appContainer = StyleSheet.create({
   flex: 1,
@@ -31,12 +32,13 @@ export const innerContainer = StyleSheet.create({
 });
 
 export const messagesContainer = StyleSheet.create({
+  width: "100%",
   flexDirection: "row",
   justifyContent: "space-between",
   alignItems: "center",
   padding: 10,
   marginBottom: 10,
-  backgroundColor: colors.lightGray,
+  backgroundColor: "rgba(211, 211, 211, 0.5)",
   borderRadius: 5,
 });
 
@@ -46,5 +48,31 @@ export function SectionComponent({ text, children }) {
       <Text style={genericText}>{text}</Text>
       <View style={innerContainer}>{children}</View>
     </View>
+  );
+}
+
+export function MySafeAreaView({ children }) {
+  return (
+    <SafeAreaView
+      style={{
+        screen: {
+          paddingTop: Constants.statusBarHeight,
+        },
+      }}
+    >
+      {children}
+    </SafeAreaView>
+  );
+}
+
+export function ListItemSeparator() {
+  return (
+    <View
+      style={{
+        width: "100%",
+        height: 1,
+        backgroundColor: colors.mediumGray,
+      }}
+    />
   );
 }
