@@ -83,6 +83,7 @@ props as its argument. Inside the component, a SectionComponent is used to
 function MessagesList(props) {
   // create a state variable to keep track of the messages
   const [messages, setMessages] = useState(initialMessages);
+  const [refreshing, setRefreshing] = useState(false);
 
   const handleDelete = (message) => {
     // Delete the message from the messages array
@@ -109,6 +110,18 @@ function MessagesList(props) {
           />
         )}
         ItemSeparatorComponent={ListItemSeparator}
+        refreshing={refreshing}
+        onRefresh={() => {
+          setMessages([
+            {
+              id: 7,
+              title: "This is title 7",
+              description: "This is description 7",
+              image: require("./assets/icon_images/graph2.png"),
+              text: "No one expects the Spanish Inquisition! I am not sure why not. We have been around for a while.",
+            },
+          ]);
+        }}
       />
     </SectionComponent>
   );

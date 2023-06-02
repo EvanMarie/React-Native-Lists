@@ -16,6 +16,7 @@ export const genericText = StyleSheet.create({
 });
 
 export const sectionContainer = StyleSheet.create({
+  flex: 1,
   marginBottom: 10,
   width: "100%",
   backgroundColor: colors.primary,
@@ -31,17 +32,6 @@ export const innerContainer = StyleSheet.create({
   marginBottom: 10,
 });
 
-export const messagesContainer = StyleSheet.create({
-  width: "100%",
-  flexDirection: "row",
-  justifyContent: "space-between",
-  alignItems: "center",
-  padding: 10,
-  marginBottom: 10,
-  backgroundColor: "rgba(211, 211, 211, 0.5)",
-  borderRadius: 5,
-});
-
 export function SectionComponent({ text, children }) {
   return (
     <View style={sectionContainer}>
@@ -55,6 +45,7 @@ export function MySafeAreaView({ children }) {
   return (
     <SafeAreaView
       style={{
+        flex: 1,
         screen: {
           paddingTop: Constants.statusBarHeight,
         },
